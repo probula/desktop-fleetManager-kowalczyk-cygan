@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Dostawczak 1",
+    "LicensePlate": "EL-12345",
+    "FuelLevel": 10.0,
+    "Status": 0
+  },
+  {
+    "Name": "Ciężarówka Logistyczna",
+    "LicensePlate": "WI-98765",
+    "FuelLevel": 85.0,
+    "Status": 1
+  },
+  {
+    "Name": "Auto Serwisowe",
+    "LicensePlate": "KR-55555",
+    "FuelLevel": 40.0,
+    "Status": 2
+  }
+]
