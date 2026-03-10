@@ -1,45 +1,27 @@
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace FleetManager.Models;
 
 public enum VehicleStatus
 {
-    Available,
-    InRoute,
-    Service
+    Available, //0
+    InRoute, //1
+    Service //2
 }
 
 
 public class Vehicle : ReactiveObject
 {
-    private string _name = string.Empty;
-    private string _licensePlate = string.Empty;
-    private double _fuelLevel;
-    private VehicleStatus _status;
+    [Reactive] 
+    public string Name { get; set; } = string.Empty;
 
-    public string Name 
-    { 
-        get => _name; 
-        set => this.RaiseAndSetIfChanged(ref _name, value); 
-    }
+    [Reactive] 
+    public string LicensePlate { get; set; } = string.Empty;
 
-    public string LicensePlate 
-    { 
-        get => _licensePlate; 
-        set => this.RaiseAndSetIfChanged(ref _licensePlate, value); 
-    }
+    [Reactive] 
+    public double FuelLevel { get; set; }
 
-   
-    public double FuelLevel 
-    { 
-        get => _fuelLevel; 
-        set => this.RaiseAndSetIfChanged(ref _fuelLevel, value); 
-    }
-
-    //0 - available, 1 - InRoute, 2 - Service
-    public VehicleStatus Status 
-    { 
-        get => _status; 
-        set => this.RaiseAndSetIfChanged(ref _status, value); 
-    }
+    [Reactive] 
+    public VehicleStatus Status { get; set; }
 }
