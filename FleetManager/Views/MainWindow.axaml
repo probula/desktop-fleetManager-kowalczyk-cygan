@@ -15,6 +15,22 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <StackPanel Margin="20" Spacing="10">
+
+    <TextBlock Text="Fleet Manager" FontSize="24"/>
+
+    <ListBox ItemsSource="{Binding Vehicles}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding FuelLevel}"/>
+                    <TextBlock Text="{Binding Status}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+
+    </StackPanel>
 
 </Window>
