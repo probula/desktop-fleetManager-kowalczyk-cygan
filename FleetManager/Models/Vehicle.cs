@@ -11,6 +11,7 @@ public enum VehicleStatus
 }
 
 
+
 public class Vehicle : ReactiveObject
 {
     [Reactive] 

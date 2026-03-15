@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,21 +10,31 @@ namespace FleetManager.Services;
 
 public class JsonVehicleService : IVehicleService
 {
-    public readonly string filePath = "vehicles.json";
+    public const string filePath = "Data/vehicles.json";
 
-    public async Task<IEnumerable<Vehicle>> GetVehiclesAsync()
+    public async Task<IEnumerable<Vehicle>> LoadVehicleAsync()
     {
-        if (!File.Exists(filePath)) return []; //sprawdz czy istenie lub zwroc puste kolekcje
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine($"Plik {filePath} nie istnieje!");
+            return new List<Vehicle>();
+        }
 
-        using var stream = File.OpenRead(filePath); //using zwalnia plik po skonczeniu uzywania go
-        
-        return await JsonSerializer.DeserializeAsync<IEnumerable<Vehicle>>(stream) ?? []; //jezli nic nie bedzie to zwroc puste liste
+        var json = await File.ReadAllTextAsync(filePath);
+        Console.WriteLine($"Zawartość pliku: {json}");
+
+        var vehicles = JsonSerializer.Deserialize<List<Vehicle>>(json);
+
+        return vehicles ?? new List<Vehicle>();
     }
 
+    
+    
     public async Task SaveVehicleAsync(IEnumerable<Vehicle> vehicles)
     {
-        var options = new JsonSerializerOptions { WriteIndented = true };
+     
         using var stream = File.Create(filePath);
-        await JsonSerializer.SerializeAsync(stream, vehicles, options);
+
+        await JsonSerializer.SerializeAsync(stream, vehicles);
     }
 }
