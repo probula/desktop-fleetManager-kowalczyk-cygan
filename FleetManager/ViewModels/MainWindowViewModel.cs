@@ -27,4 +27,5 @@ public class MainWindowViewModel : ViewModelBase
         foreach (var v in vehicles)
             Vehicles.Add(v);
     }
+    
 }
