@@ -9,7 +9,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     private readonly IVehicleService _vehicleService;
 
-    public ObservableCollection<Vehicle> Vehicles { get; } = new();
+    public ObservableCollection<VehicleItemViewModel> Vehicles { get; } = new();
 
     public MainWindowViewModel()
     {
@@ -25,7 +25,7 @@ public class MainWindowViewModel : ViewModelBase
         Vehicles.Clear();
 
         foreach (var v in vehicles)
-            Vehicles.Add(v);
+            Vehicles.Add(new VehicleItemViewModel(v));
     }
     
 }
