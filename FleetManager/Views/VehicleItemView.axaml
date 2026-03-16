@@ -9,6 +9,7 @@
              x:Class="FleetManager.Views.VehicleItemView"
              x:DataType="vm:VehicleItemViewModel">
     <StackPanel>
+    <StackPanel>
         <TextBlock
             Text="{Binding Name}"/>
         <TextBlock
@@ -19,5 +20,14 @@
                      />
         <TextBlock Text="{Binding Status}"/>
     </StackPanel>
+    <StackPanel>
     
+    
+        <Button Content="Tankuj" 
+                Command="{Binding RefuelCommand}" />
+            
+        <Button Content="W trasę" 
+                Command="{Binding GoOnRouteCommand}" />
+    </StackPanel>
+    </StackPanel>
 </UserControl>

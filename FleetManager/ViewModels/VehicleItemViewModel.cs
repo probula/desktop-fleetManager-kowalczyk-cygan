@@ -1,19 +1,48 @@
-// (ViewModel dla UserControl)
-
+using System;
+using System.Reactive;
 using FleetManager.Models;
-using FleetManager.Services;
+using ReactiveUI;
 
 namespace FleetManager.ViewModels;
 
 public class VehicleItemViewModel : ViewModelBase
 {
     private readonly Vehicle _vehicle;
+    private readonly Action _onChanged; 
 
-    public  VehicleItemViewModel(Vehicle vehicle)
+    public ReactiveCommand<Unit, Unit> RefuelCommand { get; }
+    public ReactiveCommand<Unit, Unit> GoOnRouteCommand { get; }
+
+    public VehicleItemViewModel(Vehicle vehicle, Action onChanged)
     {
         _vehicle = vehicle;
+        _onChanged = onChanged;
+        
+        var canRefuel = _vehicle.WhenAnyValue(
+            x => x.Status,
+            status => status != VehicleStatus.InRoute);
+        
+        var canGoOnRoute = _vehicle.WhenAnyValue(
+            x => x.FuelLevel,
+            x => x.Status,
+            (fuel, status) => fuel >= 15 && status == VehicleStatus.Available);
+        
+        RefuelCommand = ReactiveCommand.Create(ExecuteRefuel, canRefuel);
+        GoOnRouteCommand = ReactiveCommand.Create(ExecuteGoOnRoute, canGoOnRoute);
+        
+        _vehicle.WhenAnyValue(x => x.FuelLevel)
+            .Subscribe(_ =>
+            {
+                this.RaisePropertyChanged(nameof(FuelLevel));
+                this.RaisePropertyChanged(nameof(FuelColor));
+            });
+
+        _vehicle.WhenAnyValue(x => x.Status)
+            .Subscribe(_ => this.RaisePropertyChanged(nameof(Status)));
     }
     
+    public Vehicle GetVehicle() => _vehicle;
+
     public string Name => _vehicle.Name;
     public string LicensePlate => _vehicle.LicensePlate;
     public double FuelLevel => _vehicle.FuelLevel;
@@ -26,4 +55,15 @@ public class VehicleItemViewModel : ViewModelBase
         _    => "Green"     
     };
 
+    private void ExecuteRefuel()
+    {
+        _vehicle.FuelLevel = 100.0;
+        _onChanged?.Invoke(); 
+    }
+
+    private void ExecuteGoOnRoute()
+    {
+        _vehicle.Status = VehicleStatus.InRoute;
+        _onChanged?.Invoke(); 
+    }
 }
