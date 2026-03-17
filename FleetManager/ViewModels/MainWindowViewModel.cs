@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using FleetManager.Models;
 using FleetManager.Services;
 
@@ -9,7 +10,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     private readonly IVehicleService _vehicleService;
 
-    public ObservableCollection<Vehicle> Vehicles { get; } = new();
+    public ObservableCollection<VehicleItemViewModel> Vehicles { get; } = new();
 
     public MainWindowViewModel()
     {
@@ -25,7 +26,12 @@ public class MainWindowViewModel : ViewModelBase
         Vehicles.Clear();
 
         foreach (var v in vehicles)
-            Vehicles.Add(v);
+            Vehicles.Add(new VehicleItemViewModel(v, SaveData));
     }
     
+    private async void SaveData()
+    {
+        var models = Vehicles.Select(vm => vm.GetVehicle());
+        await _vehicleService.SaveVehicleAsync(models);
+    }
 }
