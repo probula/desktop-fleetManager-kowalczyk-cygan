@@ -11,24 +11,32 @@
         Title="FleetManager">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel Margin="20" Spacing="10">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="20">
+            
+            <TextBlock Text="Fleet Manager Dashboard" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="White"/>
+            
+            <ItemsControl ItemsSource="{Binding Vehicles}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-    <TextBlock Text="Fleet Manager" FontSize="24"/>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <views:VehicleItemView Margin="0,0,15,15"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-    <ListBox ItemsSource="{Binding Vehicles}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <views:VehicleItemView/>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
-
-    </StackPanel>
-
+        </StackPanel>
+    </ScrollViewer>
     
 </Window>
