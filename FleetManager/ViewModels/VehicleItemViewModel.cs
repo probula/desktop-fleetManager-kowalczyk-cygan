@@ -20,12 +20,12 @@ public class VehicleItemViewModel : ViewModelBase
         
         var canRefuel = _vehicle.WhenAnyValue(
             x => x.Status,
-            status => status != VehicleStatus.InRoute);
+            status => status != VehicleStatus.InRoute && status != VehicleStatus.Service);
         
         var canGoOnRoute = _vehicle.WhenAnyValue(
             x => x.FuelLevel,
             x => x.Status,
-            (fuel, status) => fuel >= 15 && status == VehicleStatus.Available);
+            (fuel, status) => fuel < 15 && status == VehicleStatus.Available);
         
         RefuelCommand = ReactiveCommand.Create(ExecuteRefuel, canRefuel);
         GoOnRouteCommand = ReactiveCommand.Create(ExecuteGoOnRoute, canGoOnRoute);
@@ -39,6 +39,7 @@ public class VehicleItemViewModel : ViewModelBase
 
         _vehicle.WhenAnyValue(x => x.Status)
             .Subscribe(_ => this.RaisePropertyChanged(nameof(Status)));
+        
     }
     
     public Vehicle GetVehicle() => _vehicle;
@@ -58,6 +59,7 @@ public class VehicleItemViewModel : ViewModelBase
     private void ExecuteRefuel()
     {
         _vehicle.FuelLevel = 100.0;
+        Console.WriteLine("Refuel clicked!");
         _onChanged?.Invoke(); 
     }
 

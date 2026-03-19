@@ -10,7 +10,8 @@ namespace FleetManager.Services;
 
 public class JsonVehicleService : IVehicleService
 {
-    public const string filePath = "Data/vehicles.json";
+    private readonly string filePath = Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory, "Data", "vehicles.json");
 
     public async Task<IEnumerable<Vehicle>> LoadVehicleAsync()
     {

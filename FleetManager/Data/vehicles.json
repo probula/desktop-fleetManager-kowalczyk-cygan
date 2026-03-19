@@ -2,19 +2,31 @@
   {
     "Name": "Dostawczak 1",
     "LicensePlate": "EL-12345",
-    "FuelLevel": 50.0,
+    "FuelLevel": 10.0,
     "Status": 0
   },
   {
     "Name": "Ciężarówka Logistyczna",
     "LicensePlate": "WI-98765",
-    "FuelLevel": 85.0,
-    "Status": 0
+    "FuelLevel": 15.0,
+    "Status": 1
+  },
+  {
+    "Name": "Ciężarówka 2",
+    "LicensePlate": "WI-98665",
+    "FuelLevel": 5.0,
+    "Status": 2
+  },
+  {
+    "Name": "Ciężarówka Serwisowe",
+    "LicensePlate": "WI-98365",
+    "FuelLevel": 11.0,
+    "Status": 1
   },
   {
     "Name": "Auto Serwisowe",
     "LicensePlate": "KR-55555",
-    "FuelLevel": 40.0,
-    "Status": 2
+    "FuelLevel": 100.0,
+    "Status": 1
   }
 ]
